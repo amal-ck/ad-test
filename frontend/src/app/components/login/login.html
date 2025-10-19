@@ -1,0 +1,29 @@
+<div class="login-container" [formGroup]="loginForm">
+    <div class="head">
+        <h1>Welcome Back</h1>
+    </div>
+
+    <label for="username">User Name</label>
+    <input type="text" placeholder="User Name" formControlName="username">
+    <div class="error" *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+        User Name Required
+    </div>
+
+    <label for="password">Password</label>
+    <div class="password-wrapper">
+        <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="password">
+        <button type="button" class="eye-btn" (click)="togglePassword()">
+            <!-- {{ showPassword ? '🙈' : '👁️' }} -->
+            <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
+        </button>
+    </div>
+    <div class="error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        Password Required
+    </div>
+
+    <button class="login-btn" (click)="fnLoginClick()"><label>Login</label></button>
+    <div class="register-link">
+        <span>Don't have an account?</span>
+        <a routerLink="/register">Register</a>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-color: rgb(210, 228, 228); */
+}
+
+.registration-container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(185, 230, 230);
+    padding: 30px;
+    gap: 10px;
+    width: 300px;
+    border-radius: 20px;
+    /* height: 100px; */
+    justify-content: center;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    color: rgb(28, 140, 140);
+}
+
+.registration-container input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+.registration-container input::placeholder {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.registration-container button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(71, 184, 184);
+    /* margin-top: 20px; */
+}
+
+.registration-container label {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+input.ng-invalid.ng-touched {
+    border: 2px solid red;
+}
+
+.error {
+    font-size: small;
+    color: red;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    flex: 1;
+}
+
+.eye-btn {
+    position: absolute;
+    right: 1%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.registration-btn {
+    margin-top: 20px;
+}
+
+.register-link {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 10px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.register-link a {
+  color: rgb(28, 140, 140);
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}

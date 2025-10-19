@@ -1,5 +1,47 @@
 [
   {
+    "ContainingType": "backend.Controllers.LoginController",
+    "Method": "Login",
+    "RelativePath": "Login/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "objMdlLogin",
+        "Type": "backend.dto.MdlLogin",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.LoginController",
+    "Method": "Register",
+    "RelativePath": "Login/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "objMdlLogin",
+        "Type": "backend.dto.MdlLogin",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.LoginController",
+    "Method": "Test",
+    "RelativePath": "Login/test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "backend.Controllers.WeatherForecastController",
     "Method": "Get",
     "RelativePath": "WeatherForecast",

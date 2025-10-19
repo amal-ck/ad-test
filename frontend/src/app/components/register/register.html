@@ -1,0 +1,54 @@
+<div class="registration-container" [formGroup]="registrationForm">
+    <div class="head">
+        <h1>Join Us</h1>
+    </div>
+
+    <label for="name">Name</label>
+    <input type="text" placeholder="Name" formControlName="name">
+    <div class="error" *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched">
+        Name Required
+    </div>
+
+    <label for="username">User Name</label>
+    <input type="text" placeholder="User Name" formControlName="username">
+    <div class="error" *ngIf="registrationForm.get('username')?.invalid && registrationForm.get('username')?.touched">
+        User Name Required
+    </div>
+
+    <label for="password">Password</label>
+    <div class="password-wrapper">
+        <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="password">
+        <button type="button" class="eye-btn" (click)="togglePassword()">
+            <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
+        </button>
+    </div>
+    <div class="error" *ngIf="registrationForm.get('password')?.hasError('required') && registrationForm.get('password')?.touched">
+        Password Required
+    </div>
+
+    <div class="error" *ngIf="registrationForm.get('password')?.hasError('pattern') && registrationForm.get('password')?.touched">
+        Password must contain atleast one lowercase & uppercase
+    </div>
+
+    <label for="confirmpassword">Confirm Password</label>
+    <div class="password-wrapper">
+        <input [type]="showPassword ? 'text' : 'password'" placeholder="Confirm Password"
+            formControlName="confirmPassword">
+        <button type="button" class="eye-btn" (click)="togglePassword()">
+            <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
+        </button>
+    </div>
+    <div class="error" *ngIf="registrationForm.get('confirmPassword')?.invalid && registrationForm.get('confirmPassword')?.touched">
+        Re-Enter Password
+    </div>
+    <div class="error"
+        *ngIf="registrationForm.hasError('passwordMismatch') && registrationForm.get('confirmPassword')?.touched">
+        Passwords do not match
+    </div>
+
+    <button class="registration-btn" (click)="fnRegisterClick()"><label>Create Account</label></button>
+    <div class="register-link">
+        <span>Already have an account?</span>
+        <a routerLink="/login">Login</a>
+    </div>
+</div>
