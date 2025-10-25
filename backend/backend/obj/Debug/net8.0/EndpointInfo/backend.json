@@ -14,17 +14,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MdlLogin"
+                "$ref": "#/components/schemas/DtoLogin"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/MdlLogin"
+                "$ref": "#/components/schemas/DtoLogin"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/MdlLogin"
+                "$ref": "#/components/schemas/DtoLogin"
               }
             }
           }
@@ -45,17 +45,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/MdlLogin"
+                "$ref": "#/components/schemas/DtoRegister"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/MdlLogin"
+                "$ref": "#/components/schemas/DtoRegister"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/MdlLogin"
+                "$ref": "#/components/schemas/DtoRegister"
               }
             }
           }
@@ -121,8 +121,36 @@
   },
   "components": {
     "schemas": {
-      "MdlLogin": {
+      "DtoLogin": {
         "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DtoRegister": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
         "additionalProperties": false
       },
       "WeatherForecast": {

@@ -1,4 +1,4 @@
-<div class="registration-container" [formGroup]="registrationForm">
+<div class="registration-container" [formGroup]="registrationForm" autocomplete="off">
     <div class="head">
         <h1>Join Us</h1>
     </div>
@@ -17,7 +17,7 @@
 
     <label for="password">Password</label>
     <div class="password-wrapper">
-        <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="password">
+        <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="password" autocomplete="new-password">
         <button type="button" class="eye-btn" (click)="togglePassword()">
             <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
         </button>
@@ -52,3 +52,5 @@
         <a routerLink="/login">Login</a>
     </div>
 </div>
+
+<app-error-popup *ngIf="errorData" [errorData]="errorData" (close)="closeErrorPopup()" ></app-error-popup>

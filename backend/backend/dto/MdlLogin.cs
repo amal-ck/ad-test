@@ -1,8 +1,15 @@
 ﻿namespace backend.dto
 {
-    public class MdlLogin
+    public class DtoLogin
     {
-        string UserName {  get; set; }
-        string Password {  get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class DtoRegister
+    {
+        public string Name { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -5,6 +5,7 @@ import { ApiData } from '../../services/api-data';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { RouterModule } from '@angular/router';
+import { catchError, filter, switchMap } from 'rxjs';
 
 
 @Component({

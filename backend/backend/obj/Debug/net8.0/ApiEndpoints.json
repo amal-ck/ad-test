@@ -8,8 +8,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "objMdlLogin",
-        "Type": "backend.dto.MdlLogin",
+        "Name": "dtoMdlLogin",
+        "Type": "backend.dto.DtoLogin",
         "IsRequired": true
       }
     ],
@@ -24,8 +24,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "objMdlLogin",
-        "Type": "backend.dto.MdlLogin",
+        "Name": "dtoRegister",
+        "Type": "backend.dto.DtoRegister",
         "IsRequired": true
       }
     ],

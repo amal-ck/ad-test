@@ -1,0 +1,8 @@
+<div *ngIf="errorData" class="error-popup-overlay">
+  <div class="error-popup">
+    <h3>{{ errorData.message }}</h3>
+    <p>{{ errorData.errorMsg }}</p>
+    <br>
+    <button (click)="closeErrorPopup()">Close</button>
+  </div>
+</div>
