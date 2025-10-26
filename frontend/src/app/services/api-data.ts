@@ -17,4 +17,12 @@ export class ApiData {
   registration(reqData: any):Observable<any>{
     return this.http.post(this.baseUrl + "login/register", reqData);
   }
+
+  login(reqData: any):Observable<any>{
+    return this.http.post(this.baseUrl + "login/login", reqData);
+  }
+
+  userData():Observable<any>{
+    return this.http.get(this.baseUrl + "login/userData");
+  }
 }

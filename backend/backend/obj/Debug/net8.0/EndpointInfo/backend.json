@@ -67,6 +67,18 @@
         }
       }
     },
+    "/Login/userData": {
+      "get": {
+        "tags": [
+          "Login"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/Login/test": {
       "get": {
         "tags": [

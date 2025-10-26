@@ -4,26 +4,29 @@ import { ApiData } from '../../services/api-data';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ErrorPopup } from "../shared/error-popup/error-popup";
 import { MdlResponse } from '../../models/commonModels';
+import { Loading } from '../shared/loading/loading';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, CommonModule, FontAwesomeModule, RouterModule, ErrorPopup],
+  imports: [ReactiveFormsModule, CommonModule, FontAwesomeModule, RouterModule, ErrorPopup, Loading],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
 export class Register implements OnInit {
   constructor(private fb: FormBuilder,
     private api: ApiData,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router:Router
   ) { }
 
   registrationForm!: FormGroup;
   errorMessage: string = "";
   showPassword = false;
   errorData: MdlResponse | null = null;
+  loading: boolean = false;
 
   //icons
   faEye = faEye;
@@ -54,10 +57,18 @@ export class Register implements OnInit {
   fnRegisterClick() {
     this.registrationForm.markAllAsTouched()
     if (this.registrationForm.valid) {
+      this.loading = true;
       this.errorData = null;
       this.api.registration(this.registrationForm.getRawValue()).subscribe({
-        next: (res: any) => {  },
+        next: (res: MdlResponse) => { 
+          if(res.success == true && res.data != ""){
+            localStorage.setItem("token",res.data);
+            this.loading = false;
+            this.router.navigate([""])
+          }
+         },
         error: (err: any) => {
+          this.loading = false;
            this.errorData = err.error
            console.log(this.errorData)
            this.cdr.detectChanges();

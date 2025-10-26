@@ -46,11 +46,13 @@
         Passwords do not match
     </div>
 
-    <button class="registration-btn" (click)="fnRegisterClick()"><label>Create Account</label></button>
+    <button class="registration-btn" (click)="fnRegisterClick()">Create Account</button>
     <div class="register-link">
         <span>Already have an account?</span>
         <a routerLink="/login">Login</a>
     </div>
 </div>
 
+<!-- Shared Components -->
 <app-error-popup *ngIf="errorData" [errorData]="errorData" (close)="closeErrorPopup()" ></app-error-popup>
+<app-loading [isLoading]="loading"></app-loading>

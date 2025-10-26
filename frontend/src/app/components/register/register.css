@@ -78,6 +78,7 @@ input.ng-invalid.ng-touched {
 
 .registration-btn {
     margin-top: 20px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .register-link {

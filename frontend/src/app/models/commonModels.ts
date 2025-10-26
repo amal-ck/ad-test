@@ -4,4 +4,5 @@ export class MdlResponse{
     message: string = "";
     errorMsg: string = "";
     errorExMsg: string = "";
+    data: string = "";
 }

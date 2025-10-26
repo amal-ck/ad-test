@@ -21,9 +21,13 @@
         Password Required
     </div>
 
-    <button class="login-btn" (click)="fnLoginClick()"><label>Login</label></button>
+    <button class="login-btn" (click)="fnLoginClick()">Login</button>
     <div class="register-link">
         <span>Don't have an account?</span>
         <a routerLink="/register">Register</a>
     </div>
 </div>
+
+<!-- Shared Components -->
+<app-error-popup *ngIf="errorData" [errorData]="errorData" (close)="closeErrorPopup()" ></app-error-popup>
+<app-loading [isLoading]="loading"></app-loading>

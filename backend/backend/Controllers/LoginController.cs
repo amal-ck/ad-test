@@ -2,24 +2,51 @@
 using backend.dto;
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
+using Microsoft.AspNetCore.Identity;
+using backend.Processors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers
 {
     [ApiController]
     [Route("[Controller]")]
-    public class LoginController: ControllerBase
+    public class LoginController : ControllerBase
     {
         private readonly AppDbContext _appDbContext;
+        private readonly IConfiguration _conf;
 
-        public LoginController(AppDbContext appDbContext)
+        public LoginController(AppDbContext appDbContext, IConfiguration configuration)
         {
             _appDbContext = appDbContext;
+            _conf = configuration;
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] DtoLogin dtoMdlLogin)
+        public IActionResult Login([FromBody] DtoLogin dtoLogin)
         {
-            return Ok();
+            try
+            {
+                LoginProcess login = new LoginProcess();
+                MdlResponse mdlResponse = new MdlResponse();
+                mdlResponse = login.FnLogin(dtoLogin, _appDbContext, _conf);
+                return Ok(mdlResponse);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                MdlResponse mdlResponse = new MdlResponse();
+                mdlResponse.Success = false;
+                mdlResponse.Message = "Login Failed";
+                mdlResponse.ErrorMsg = ex.Message;
+                return Unauthorized(mdlResponse);
+            }
+            catch (Exception ex)
+            {
+                MdlResponse mdlResponse = new MdlResponse();
+                mdlResponse.Success = false;
+                mdlResponse.Message = "Login Failed";
+                mdlResponse.ErrorExMsg = Convert.ToString(ex.Message);
+                return StatusCode(500, mdlResponse);
+            }
         }
 
         [HttpPost("register")]
@@ -27,38 +54,40 @@ namespace backend.Controllers
         {
             try
             {
+                LoginProcess login = new LoginProcess();
                 MdlResponse mdlResponse = new MdlResponse();
-                var existingUser = _appDbContext.Users.FirstOrDefault(user => user.Username == dtoRegister.UserName);
-                if(existingUser != null)
-                {
-                    mdlResponse.Success = false;
-                    mdlResponse.Message = "Registration Failed";
-                    mdlResponse.ErrorMsg = "Username already taken";
-                    return BadRequest(mdlResponse);
-                }
-                var user = new User
-                {
-                    Name = dtoRegister.Name,
-                    Username = dtoRegister.UserName,
-                    Password = dtoRegister.Password,
-                };
-                _appDbContext.Users.Add(user);
-                _appDbContext.SaveChanges();
-
-                mdlResponse.Success = true;
-                mdlResponse.Message = "Registration Succesfull";
+                mdlResponse = login.FnRegister(dtoRegister, _appDbContext, _conf);
                 return Ok(mdlResponse);
+
             }
-            catch (Exception ex) {
+            catch (BadHttpRequestException ex)
+            {
+                MdlResponse mdlResponse = new MdlResponse();
+                mdlResponse.Success = false;
+                mdlResponse.Message = "Registration Failed";
+                mdlResponse.ErrorMsg = ex.Message;
+                return Unauthorized(mdlResponse);
+            }
+            catch (Exception ex)
+            {
                 MdlResponse mdlResponse = new MdlResponse();
                 mdlResponse.Success = false;
                 mdlResponse.Message = "Registration Failed";
                 mdlResponse.ErrorExMsg = Convert.ToString(ex.Message);
-                return Ok(mdlResponse);
+                return StatusCode(500, mdlResponse);
             }
 
         }
-        
+
+        [Authorize]
+        [HttpGet("userData")]
+        public IActionResult GetUserData()
+        {
+            var userId = User.FindFirst("UserId")?.Value;
+            var username = User.Identity?.Name;
+            return Ok(new { UserId = userId, Username = username });
+        }
+
         [HttpGet("test")]
         public IActionResult Test()
         {

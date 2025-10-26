@@ -8,7 +8,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dtoMdlLogin",
+        "Name": "dtoLogin",
         "Type": "backend.dto.DtoLogin",
         "IsRequired": true
       }
@@ -35,6 +35,16 @@
     "ContainingType": "backend.Controllers.LoginController",
     "Method": "Test",
     "RelativePath": "Login/test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "backend.Controllers.LoginController",
+    "Method": "GetUserData",
+    "RelativePath": "Login/userData",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
