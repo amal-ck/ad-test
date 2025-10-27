@@ -54,8 +54,7 @@ export class Login implements OnInit {
       this.api.login(this.loginForm.getRawValue()).subscribe({
         next: (res: MdlResponse) => {
           console.log("login succes-> ", res);
-          if (res.success == true && res.data != "") {
-            localStorage.setItem("token", res.data);
+          if (res.success == true) {
             this.loading = false;
             this.router.navigate([""])
           }

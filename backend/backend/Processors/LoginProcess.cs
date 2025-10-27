@@ -11,7 +11,7 @@ namespace backend.Processors
 {
     public class LoginProcess
     {
-        public MdlResponse FnLogin(DtoLogin dtoLogin, AppDbContext appDbContext, IConfiguration conf)
+        public (MdlResponse, string )FnLogin(DtoLogin dtoLogin, AppDbContext appDbContext, IConfiguration conf)
         {
             MdlResponse mdlResponse = new MdlResponse();
             var user = appDbContext.Users.FirstOrDefault(user => user.Username == dtoLogin.UserName);
@@ -24,10 +24,10 @@ namespace backend.Processors
             var passwordMatch = passwordHasher.VerifyHashedPassword(user, user.Password, dtoLogin.Password);
             if (passwordMatch == PasswordVerificationResult.Success)
             {
-                mdlResponse.Data = FnGenerateJWTToken(user, conf);
+                string token = FnGenerateJWTToken(user, conf);
                 mdlResponse.Success = true;
                 mdlResponse.Message = "Login Success";
-                return mdlResponse;
+                return (mdlResponse, token);
             }
             else
             {

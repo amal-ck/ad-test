@@ -28,7 +28,17 @@ namespace backend.Controllers
             {
                 LoginProcess login = new LoginProcess();
                 MdlResponse mdlResponse = new MdlResponse();
-                mdlResponse = login.FnLogin(dtoLogin, _appDbContext, _conf);
+                string token = "";
+                (mdlResponse, token) = login.FnLogin(dtoLogin, _appDbContext, _conf);
+
+                Response.Cookies.Append("access_token", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_conf["Jwt:ExpiryMinutes"]))
+                });
+
                 return Ok(mdlResponse);
             }
             catch (UnauthorizedAccessException ex)
@@ -66,7 +76,7 @@ namespace backend.Controllers
                 mdlResponse.Success = false;
                 mdlResponse.Message = "Registration Failed";
                 mdlResponse.ErrorMsg = ex.Message;
-                return Unauthorized(mdlResponse);
+                return BadRequest(mdlResponse);
             }
             catch (Exception ex)
             {
