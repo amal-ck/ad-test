@@ -66,7 +66,15 @@ namespace backend.Controllers
             {
                 LoginProcess login = new LoginProcess();
                 MdlResponse mdlResponse = new MdlResponse();
-                mdlResponse = login.FnRegister(dtoRegister, _appDbContext, _conf);
+                string token = "";
+                (mdlResponse, token )= login.FnRegister(dtoRegister, _appDbContext, _conf);
+                Response.Cookies.Append("access_token", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_conf["Jwt:ExpiryMinutes"]))
+                });
                 return Ok(mdlResponse);
 
             }
@@ -102,6 +110,14 @@ namespace backend.Controllers
         public IActionResult Test()
         {
             return Ok("Test Success");
+        }
+
+        [Authorize]
+        [HttpGet("checkLogin")]
+        public IActionResult CheckLogin()
+        {
+            // If user is authorized, this endpoint will only be reached if token (cookie) is valid
+            return Ok(new { isLoggedIn = true });
         }
     }
 }

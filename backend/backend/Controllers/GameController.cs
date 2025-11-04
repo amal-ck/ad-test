@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.dto;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -15,11 +16,40 @@ namespace backend.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet("getgames")]
-        public IActionResult GetGames()
+        public IActionResult GetGames([FromQuery] int pageNumber, int pageSize)
         {
-            var games = _context.Games.ToList();
-            return Ok(games);
+            var userId = int.Parse(User.FindFirst("userId").Value);
+                
+            if (pageNumber <= 0) pageNumber = 1;
+            if (pageSize <= 0) pageSize = 9;
+
+            var totalRecords = _context.Games.Count();
+            var userLibraryGameIds = _context.UserGameLibraries.Where(l => l.userId == userId).Select(l => l.GameId).ToHashSet();
+
+
+            var games = _context.Games.Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                Select(g => new
+                {
+                    g.id,
+                    g.name,
+                    g.category,
+                    g.price,
+                    g.description,
+                    Sold = userLibraryGameIds.Contains(g.id)
+                }).ToList();
+
+            var res = new
+            {
+                TotalRecords = totalRecords,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize),
+                Data = games
+            };
+
+            return Ok(res);
         }
 
         [HttpPost("savegames")]

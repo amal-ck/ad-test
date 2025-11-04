@@ -11,7 +11,7 @@ namespace backend.Processors
 {
     public class LoginProcess
     {
-        public (MdlResponse, string )FnLogin(DtoLogin dtoLogin, AppDbContext appDbContext, IConfiguration conf)
+        public (MdlResponse, string)FnLogin(DtoLogin dtoLogin, AppDbContext appDbContext, IConfiguration conf)
         {
             MdlResponse mdlResponse = new MdlResponse();
             var user = appDbContext.Users.FirstOrDefault(user => user.Username == dtoLogin.UserName);
@@ -35,7 +35,7 @@ namespace backend.Processors
             }
         }
 
-        public MdlResponse FnRegister(DtoRegister dtoRegister, AppDbContext appDbContext, IConfiguration conf)
+        public (MdlResponse, string) FnRegister(DtoRegister dtoRegister, AppDbContext appDbContext, IConfiguration conf)
         {
             MdlResponse mdlResponse = new MdlResponse();
             var existingUser = appDbContext.Users.FirstOrDefault(user => user.Username == dtoRegister.UserName);
@@ -54,10 +54,10 @@ namespace backend.Processors
             appDbContext.Users.Add(user);
             appDbContext.SaveChanges();
 
-            mdlResponse.Data = FnGenerateJWTToken(user, conf);
+            string token = FnGenerateJWTToken(user, conf);
             mdlResponse.Success = true;
             mdlResponse.Message = "Registration Succesfull";
-            return mdlResponse;
+            return (mdlResponse,token);
         }
 
         public string FnGenerateJWTToken(User user, IConfiguration conf)

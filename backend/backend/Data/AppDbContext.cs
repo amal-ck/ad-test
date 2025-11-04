@@ -22,7 +22,7 @@ namespace backend.Data
             modelBuilder.Entity<UserGameLibrary>()
                 .HasOne(ug => ug.User)
                 .WithMany(u => u.UserGameLibraries)
-                .HasForeignKey(u => u.userId);
+                .HasForeignKey(ug => ug.userId);
 
             modelBuilder.Entity<UserGameLibrary>()
                 .HasOne(ug => ug.Game)
