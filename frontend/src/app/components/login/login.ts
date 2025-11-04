@@ -9,6 +9,7 @@ import { catchError, filter, switchMap } from 'rxjs';
 import { ErrorPopup } from '../shared/error-popup/error-popup';
 import { MdlResponse } from '../../models/commonModels';
 import { Loading } from '../shared/loading/loading';
+import { AuthService } from '../../services/auth-service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class Login implements OnInit {
   constructor(private fb: FormBuilder,
     private api: ApiData,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private authService: AuthService
   ) { }
 
   loginForm!: FormGroup;
@@ -56,7 +57,7 @@ export class Login implements OnInit {
           console.log("login succes-> ", res);
           if (res.success == true) {
             this.loading = false;
-            this.router.navigate([""])
+            this.authService.fnLogin();
           }
         },
         error: (err: any) => {

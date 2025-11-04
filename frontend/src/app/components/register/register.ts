@@ -8,6 +8,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ErrorPopup } from "../shared/error-popup/error-popup";
 import { MdlResponse } from '../../models/commonModels';
 import { Loading } from '../shared/loading/loading';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,7 @@ export class Register implements OnInit {
   constructor(private fb: FormBuilder,
     private api: ApiData,
     private cdr: ChangeDetectorRef,
-    private router:Router
+    private authService:AuthService
   ) { }
 
   registrationForm!: FormGroup;
@@ -64,7 +65,7 @@ export class Register implements OnInit {
           if(res.success == true && res.data != ""){
             localStorage.setItem("token",res.data);
             this.loading = false;
-            this.router.navigate([""])
+            this.authService.fnLogin();
           }
          },
         error: (err: any) => {

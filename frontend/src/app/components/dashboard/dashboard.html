@@ -1,1 +1,31 @@
-<h1>Welcome Home {{user?.username}}</h1>
+<div class="games-container">
+  <h1 class="title">🎮 Available Games</h1>
+
+  <div *ngIf="games?.length; else loading">
+    <div class="game-list">
+      <div class="game-card" *ngFor="let game of games">
+        <h2 class="game-name">{{ game.name }}</h2>
+        <p class="game-category">Category: {{ game.category }}</p>
+        <p class="game-description">{{ game.description }}</p>
+        <div class="game-footer">
+          <span class="price">${{ game.price }}</span>
+          <button class="buy-btn" [disabled]="game.sold">
+  {{ game.sold ? 'Owned' : 'Buy Now' }}
+</button>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ Pagination controls -->
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="pageNumber === 1">⬅ Prev</button>
+      <span>Page {{ pageNumber }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="pageNumber === totalPages">Next ➡</button>
+    </div>
+  </div>
+
+  <ng-template #loading>
+    <p class="loading">Loading games...</p>
+  </ng-template>
+</div>
